@@ -1,6 +1,22 @@
 package doomsday
 
-import "testing"
+import (
+	"log"
+	"testing"
+)
+
+// This is testing generated code, perhaps bizarre but I want to make sure it
+// all works
+func StringerTest(t *testing.T) {
+
+	if res := Monday.String(); res != "Monday" {
+		log.Println("Expected string to be Monday, got %s", res)
+	}
+
+	if res := Sunday.String(); res != "Sunday" {
+		log.Println("Expected string to be Sunday, got %s", res)
+	}
+}
 
 // Tests year anchor and century anchor (although it can be tested
 // separately, it is just a rule based function
