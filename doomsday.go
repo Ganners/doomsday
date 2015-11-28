@@ -1,7 +1,7 @@
 // The doomsday package implements a somewhat human approach to calculating
 // Conway's Doomsday Algorithm. It exposes a single exported method:
 //
-// DayOfWeek(year, month, day) int
+// Day(year, month, day) int
 //
 // It returns an integer constant which represents a day of the week
 package doomsday
@@ -10,11 +10,11 @@ import "math"
 
 // The day of the week is an integer than can be operated on, ranging 0 - 6. It
 // may be converted into it's string representative
-type dayOfWeek int
+type Day int
 
 // The days of the week (0 - 6)
 const (
-	Sunday dayOfWeek = iota
+	Sunday Day = iota
 	Monday
 	Tuesday
 	Wednesday
@@ -23,11 +23,11 @@ const (
 	Saturday
 )
 
-type monthOfYear int
+type Month int
 
 // The months of the year (1 - 12)
 const (
-	_ monthOfYear = iota
+	_ Month = iota
 	January
 	February
 	March
@@ -42,10 +42,10 @@ const (
 	December
 )
 
-// DayofWeek runs the doomsday algorithm to find the day of the week.
+// Day runs the doomsday algorithm to find the day of the week.
 // It takes a 'human' approach, so tries to work things out
 // descriptively as a human might, rather than being more elegant
-func DayOfWeek(year, month, day int) dayOfWeek {
+func DayOfWeek(year, month, day int) Day {
 
 	// Find the anchor for the year
 	yearAnchor := yearAnchor(year, centuryAnchor(year))
@@ -57,7 +57,7 @@ func DayOfWeek(year, month, day int) dayOfWeek {
 	dist := (day - closestDay)
 
 	// Return the distance from anchor mod week
-	return dayOfWeek(mod((int(yearAnchor) + dist), 7))
+	return Day(mod((int(yearAnchor) + dist), 7))
 }
 
 // Returns true if it is a leap year, otherwise false
@@ -69,7 +69,7 @@ func IsLeapYear(year int) bool {
 // day, again this is based on how a human might do it
 func closestDoomsday(month int, isLeap bool) (int, int) {
 
-	switch monthOfYear(month) {
+	switch Month(month) {
 	case January:
 		if isLeap {
 			return int(January), 4
@@ -108,7 +108,7 @@ func closestDoomsday(month int, isLeap bool) (int, int) {
 }
 
 // Grabs the anchor for a given year
-func yearAnchor(year int, centuryAnchor dayOfWeek) dayOfWeek {
+func yearAnchor(year int, centuryAnchor Day) Day {
 
 	lastDigits := lastTwoDigits(year)
 
@@ -130,12 +130,12 @@ func yearAnchor(year int, centuryAnchor dayOfWeek) dayOfWeek {
 	// Count forward the specified number of days from the anchor day
 	doomsday := (d%7 + int(centuryAnchor)) % 7
 
-	return dayOfWeek(doomsday)
+	return Day(doomsday)
 }
 
 // Gets the anchor day for a given year, calculated how a human might
 // calculate it
-func centuryAnchor(year int) dayOfWeek {
+func centuryAnchor(year int) Day {
 
 	if year >= 1800 && year <= 1899 {
 		return Friday
@@ -181,5 +181,5 @@ func mod(a, b int) int {
 	return r
 }
 
-//go:generate stringer -type=dayOfWeek
-//go:generate stringer -type=monthOfYear
+//go:generate stringer -type=Day
+//go:generate stringer -type=Month
