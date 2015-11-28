@@ -30,19 +30,19 @@ func TestYearAnchor(t *testing.T) {
 // Performs some basic leapyear tests
 func TestIsLeapYear(t *testing.T) {
 
-	if !isLeapYear(2016) {
+	if !IsLeapYear(2016) {
 		t.Errorf("Expected 2016 to return true as leap year")
 	}
 
-	if !isLeapYear(2012) {
+	if !IsLeapYear(2012) {
 		t.Errorf("Expected 2012 to return true as leap year")
 	}
 
-	if isLeapYear(2015) {
+	if IsLeapYear(2015) {
 		t.Errorf("Expected 2015 to return false as leap year")
 	}
 
-	if isLeapYear(2013) {
+	if IsLeapYear(2013) {
 		t.Errorf("Expected 2013 to return false as leap year")
 	}
 }

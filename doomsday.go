@@ -23,9 +23,11 @@ const (
 	Saturday
 )
 
+type monthOfYear int
+
 // The months of the year (1 - 12)
 const (
-	_ int = iota
+	_ monthOfYear = iota
 	January
 	February
 	March
@@ -49,7 +51,7 @@ func DayOfWeek(year, month, day int) dayOfWeek {
 	yearAnchor := yearAnchor(year, centuryAnchor(year))
 
 	// Calculate the closest day
-	_, closestDay := closestDoomsday(month, isLeapYear(year))
+	_, closestDay := closestDoomsday(month, IsLeapYear(year))
 
 	// Distance from the closest day anchor
 	dist := (day - closestDay)
@@ -59,7 +61,7 @@ func DayOfWeek(year, month, day int) dayOfWeek {
 }
 
 // Returns true if it is a leap year, otherwise false
-func isLeapYear(year int) bool {
+func IsLeapYear(year int) bool {
 	return (year % 4) == 0
 }
 
@@ -67,39 +69,39 @@ func isLeapYear(year int) bool {
 // day, again this is based on how a human might do it
 func closestDoomsday(month int, isLeap bool) (int, int) {
 
-	switch month {
+	switch monthOfYear(month) {
 	case January:
 		if isLeap {
-			return January, 4
+			return int(January), 4
 		} else {
-			return January, 3
+			return int(January), 3
 		}
 	case February:
 		if isLeap {
-			return February, 29
+			return int(February), 29
 		} else {
-			return February, 28
+			return int(February), 28
 		}
 	case March:
-		return February, 28
+		return int(February), 28
 	case April:
-		return April, 4
+		return int(April), 4
 	case May:
-		return May, 9
+		return int(May), 9
 	case June:
-		return June, 6
+		return int(June), 6
 	case July:
-		return July, 11
+		return int(July), 11
 	case August:
-		return August, 8
+		return int(August), 8
 	case September:
-		return September, 5
+		return int(September), 5
 	case October:
-		return October, 10
+		return int(October), 10
 	case November:
-		return November, 7
+		return int(November), 7
 	case December:
-		return December, 12
+		return int(December), 12
 	}
 
 	return 0, 0
@@ -180,3 +182,4 @@ func mod(a, b int) int {
 }
 
 //go:generate stringer -type=dayOfWeek
+//go:generate stringer -type=monthOfYear
