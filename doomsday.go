@@ -1,9 +1,15 @@
 // The doomsday package implements a somewhat human approach to calculating
-// Conway's Doomsday Algorithm. It exposes a single exported method:
+// Conway's Doomsday Algorithm. It exposes a core function:
 //
-// Day(year, month, day) int
+// DayOfWeek(year, month, day) int
 //
-// It returns an integer constant which represents a day of the week
+// It returns a Day (base-type integer)
+//
+// It exposes two types, Day and Month, which represent the underlying dates as
+// integers from 0-7 and 1-12 respectively. These have a stringer implemented
+// and so can be converted to their string representative
+//
+// Finally it can say if a given year is a leap year: IsLeapYear(year) bool
 package doomsday
 
 import "math"
